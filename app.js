@@ -1,7 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
+const layout = require('./views/layout.js')
+const {db} = require('./models')
 const app = express();
+
+
+
+db.authenticate().
+then(() => {
+  console.log('connected to the database');
+})
 
 app.use(morgan('dev'))
 
@@ -19,7 +28,7 @@ app.use(bodyParser.json())
 // })
 
 app.get('/', (req, res) => {
-  res.send('Hello world!')
+  res.send(layout())
 })
 
 module.exports = app;
